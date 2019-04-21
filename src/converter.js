@@ -18,18 +18,25 @@ const arabToRomanConverter = (param) => {
 const romanToArabConverter = (param) => {
     let mapper = { I: 1, IV: 4, V: 5, IX: 9, X: 10, XL: 40, L: 50, XC: 90, C: 100, CD: 400, D: 500, CM: 900, M: 1000 }
     let first = 0,
-        arab = 0;
+        arabic = 0;
+        //loop through the string
     for (let i = 0; i < param.length; i++) {
+        //assign the character's value
         first = mapper[param[i]];
+        //check if it is the last chaaracter and if it is bigger to add or substract 
         if ((i < param.length - 1) && first < mapper[param[i + 1]])
-            arab -= first;
+            arabic -= first;
         else
-            arab += first;
+            arabic += first;
     }
-    return arab
+    return arabic
 }
 
 module.exports= {
     arabToRomanConverter: arabToRomanConverter,
     romanToArabConverter: romanToArabConverter
 }
+
+/**
+ *         //https://www.mathsisfun.com/roman-numerals.html
+ */

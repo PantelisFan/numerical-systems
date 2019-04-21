@@ -15,7 +15,7 @@ const arabToRoman = (param) => {
             collections.numbers.findOne({ arabic: param }, function (err, result) {
 
                 if (!err) {
-                    console.log('results: ', result, err);
+                    // console.log('results: ', result, err);
                     if (result) {
                         let ret = {
                             "inputValue": result.arabic,
@@ -57,14 +57,12 @@ const arabToRoman = (param) => {
 
 const romanToArab = (param) => {
     return new Promise((resolve, reject) => {
-        console.log(`Convert ${param} to arab.`);
         //1. Check if param is string
         const romanRegex = new RegExp('^M*(CM)?(D)?(CD)?(CCC|CC|C)?(XC)?(L)?(XL)?(XXX|XX|X)?(IX)?(V)?(IV)?(III|II|I)?$')
         let regResult = romanRegex.exec(param)
         if (regResult && regResult[0] === param) {
             collections.numbers.findOne({ roman: param }, function (err, result) {
                 if (!err) {
-                    console.log('Result: ', result, err);
                     if (result) {
                         ret = {
                             "inputValue": param,
@@ -106,13 +104,15 @@ const getAll = (param) => {
                     if (err) {
                         reject(err)
                     }
-                    resolve(result)
+                    // resolve(result)
+                    resolve(_.map(result, o => { return Number(o.arabic) }).sort());
+
                 })
         } else if (param === "roman") {
             collections.numbers.find({}, { projection: { _id: 0, roman: 1 } })
                 .toArray((err, result) => {
                     if (!err) {
-                        resolve(result)
+                        resolve(_.map(result, o => { return o.roman; }).sort());
                     }
                 })
         } else {
@@ -123,8 +123,16 @@ const getAll = (param) => {
 }
 
 const deleteAll = () => {
-    collections.numbers.deleteMany({})
-
+    return new Promise((resolve, reject) => {
+        collections.numbers.deleteMany({}, (err, res) => {
+            if (!err) {
+                resolve(res)
+            } else {
+                reject(err)
+            }
+        })
+    }
+    );
 }
 
 module.exports = {

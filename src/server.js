@@ -18,7 +18,8 @@ http.createServer((req, res) => {
             // let romanNumber = url.split('/roman/').pop()
             // console.log(romanNumber)
             const path = url.split('/')[1];
-            const param = url.split('/')[2];
+            let param = url.split('/')[2];
+            // console.log(param)
 
             switch (path) {
                 case 'arabic':
@@ -35,7 +36,7 @@ http.createServer((req, res) => {
                         });
                     break;
                 case 'roman':
-                    controllers.arabToRoman(param)
+                    controllers.arabToRoman(param.toUpperCase())
                         .then(data => res.end(JSON.stringify(data, null, 3)))
                         .catch(err => {
                             if (err === 400) {
@@ -69,10 +70,19 @@ http.createServer((req, res) => {
         }
 
     } else if (req.method === 'DELETE' && url === '/remove/all') {
+        //Object error if not stringified.
         controllers.deleteAll()
-
+            .then(()=> {
+                res.statusCode = 200;
+                res.end();
+            })
+            .catch(err => {
+                res.statusCode = 500;
+                res.end();
+            })
     } else {
-        console.log('404');
+        res.statusCode = 404;
+        res.end();
         // res.write('404 not found');
     }
     // res.end();
