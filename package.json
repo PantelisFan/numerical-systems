@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine ./spec/numerical.spec.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.11",
     "mongodb": "^3.2.3"
+  },
+  "devDependencies": {
+    "jasmine": "^3.4.0"
   }
 }
