@@ -32,7 +32,7 @@ const arabToRoman = (param) => {
                                 //5. return both values 
 
                                 let ret = {
-                                    "inputValue": param,
+                                    "inputValue": Number(param),
                                     "convertedValue": converted
                                 }
                                 resolve(ret);
@@ -57,7 +57,7 @@ const arabToRoman = (param) => {
 
 const romanToArab = (param) => {
     return new Promise((resolve, reject) => {
-        //1. Check if param is string
+        //1. Validate the param against the regular expression
         const romanRegex = new RegExp('^M*(CM)?(D)?(CD)?(CCC|CC|C)?(XC)?(L)?(XL)?(XXX|XX|X)?(IX)?(V)?(IV)?(III|II|I)?$')
         let regResult = romanRegex.exec(param)
         if (regResult && regResult[0] === param) {

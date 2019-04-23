@@ -15,7 +15,7 @@ http.createServer((req, res) => {
         const getRegex = new RegExp("^\/((roman)|(all)|(arabic))\/([a-zA-Z0-9]+)$");
         let result = getRegex.exec(url)
         if (result && result[0] === url) {
-            // let romanNumber = url.split('/roman/').pop()
+            // let romanNumber = url.split('/roman/').pop() 
             // console.log(romanNumber)
             const path = url.split('/')[1];
             let param = url.split('/')[2];
@@ -23,7 +23,7 @@ http.createServer((req, res) => {
 
             switch (path) {
                 case 'arabic':
-                    controllers.romanToArab(param)
+                    controllers.romanToArab(param.toUpperCase())
                         .then(data =>  res.end(JSON.stringify(data, null, 3)))
                         .catch(err => {
                             if (err === 400) {
@@ -36,7 +36,7 @@ http.createServer((req, res) => {
                         });
                     break;
                 case 'roman':
-                    controllers.arabToRoman(param.toUpperCase())
+                    controllers.arabToRoman(param)
                         .then(data => res.end(JSON.stringify(data, null, 3)))
                         .catch(err => {
                             if (err === 400) {

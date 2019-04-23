@@ -9,6 +9,8 @@ You have to make sure that mongod is running, and a db named `numerical-conversi
 `npm run start` to start the server, listening to port 3000,
 `npm run test` to compare expected values against the controller's returned values.
 
+A postman collection has been added which includes several request cases under `./postman` folder.
+
 ### Acknowledgements
 
 - The methodology followed to convert roman numerals to arabic is the one described here:
